@@ -1,0 +1,17 @@
+{
+  "name": "wordcloudbot",
+  "version": "0.0.1",
+  "description": "A discord bot that creates word clouds ",
+  "main": "index.js ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Darkspine77",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.6.2",
+    "discord.js": "^10.0.1",
+    "firebase": "^3.6.4",
+    "fs": "0.0.1-security"
+  }
+}
