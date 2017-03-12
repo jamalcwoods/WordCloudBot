@@ -1,5 +1,5 @@
 # Word Cloud Bot
-# V(0.0.1)
+# V(0.1)
 
 ![N|Solid](https://github.com/Darkspine77/WordCloudBot/blob/master/WordCloudBot_icon.png)
 
