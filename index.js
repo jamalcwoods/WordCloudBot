@@ -29,13 +29,13 @@ var fs = require('fs')
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var channelList = []
+var inv = "https://discordapp.com/oauth2/authorize?client_id=263490610328109056&scope=bot&permissions=3072"
 
 
 client.on('ready', () => {
   var connectedChannels = client.channels.array();
   for (var i = connectedChannels.length - 1; i >= 0; i--) {
     if(connectedChannels[i].type == 'text'){
-    console.log("Cloud bot is now running on " + connectedChannels[i].name)
     var obj = {
       'channel':connectedChannels[i],
       'words':[],
@@ -46,9 +46,29 @@ client.on('ready', () => {
   };
 });
 
+client.on('guildCreate', guild => {
+	console.log("Joined " + guild.name)
+	finalMessage = "```"
+	finalMessage += "Thank your for adding Word Cloud Bot to your server! \n"
+	finalMessage += "This bot is made to create word clouds based on words said in specific channels\n"
+	finalMessage += "Type cl! help to view all of the commands \n"
+	finalMessage += "```"
+	guild.defaultChannel.sendMessage(finalMessage)
+	for (var i = guild.channels.array().length - 1; i >= 0; i--) {
+		if(guild.channels.array().type == 'text'){
+		    var obj = {
+		      'channel':guild.channels.array(),
+		      'words':[],
+		      'ratings':[]
+		    };
+		    channelList.push(obj);
+		  }
+	}
+});
+
 client.on('message', message => { 
       var input = message.content.split(" ");
-    if(input[0] == '!wordcloud'){
+    if(input[0] == 'cl!'){
       if(input.length == 1){
         for (var i = channelList.length - 1; i >= 0; i--) {
           if(channelList[i].channel == message.channel){
@@ -61,15 +81,40 @@ client.on('message', message => {
             for (var i = channelList.length - 1; i >= 0; i--) {
               if(channelList[i].channel == message.channel){
                 channelList[i].words = []
-                channelList[i].rating = []
+                channelList[i].ratings = []
               }
             }
             message.channel.sendMessage("The cloud has been cleared!")
-          }
+          } else if(input[1] == 'invite'){
+          	message.channel.sendMessage("My invite link!: <" + inv + ">")
+          } else if(input[1] == 'help'){
+          	var finalMessage = ""
+          	finalMessage = "```"
+			finalMessage += "To get an invite link for this bot -> cl! invite \n"
+			finalMessage += "To summon a word cloud -> cl!\n"
+			finalMessage += "To clear words in a channel's word cloud -> cl! clear\n"
+			finalMessage += "To report an error -> cl! report (text here) \n"
+			finalMessage += "```"
+			message.channel.sendMessage(finalMessage)
+	       } else if (input[1] == "report"){
+				if(input.length >= 3){
+					var finalMessage = message.author.username + ": " + message.content.split("cl! report")[1]
+					var	messageReply = "```"
+					messageReply += "Thank you for reporting a problem you found, The Word Cloud Bot team apologizes for any inconvenience you have experienced! \n"
+					messageReply += "```"
+					message.channel.sendMessage(messageReply)
+					bot.fetchUser('163809334852190208').then(user => 
+						user.createDM().then(dm => {
+								dm.sendMessage(finalMessage)
+							}
+						)
+					)
+				}
+			}
         }
       }
     }
-    else if(message.author.username != client.user.username){
+    else if(!message.author.bot){
       var arrMessage = message.content.split(" ");
       for (var i = channelList.length - 1; i >= 0; i--) {
         if(channelList[i].channel == message.channel){
@@ -96,14 +141,14 @@ function makeImage(words,ratings,channel){
         numofWords = ratings[i]
       }
     };
-    var imageID = makeid();
+    var imageID = String(channel.id);
     var out = fs.createWriteStream(imageID + '.jpg')
-    var canvas = new Canvas(4000, 4000)
+    var canvas = new Canvas(400, 400)
     var stream = canvas.pngStream();
     var ctx = canvas.getContext('2d');
     for (var i = words.length - 1; i >= 0; i--) {
     ctx.fillStyle = getRandomColor();
-    ctx.font = ratings[i]/numofWords * 720 + 'px Impact';
+    ctx.font = ratings[i]/numofWords * 72 + 'px Impact';
     ctx.fillText(words[i],Math.floor(Math.random() * canvas.width/2) + canvas.width/6,Math.floor(Math.random() * canvas.height/2) + canvas.height/3);
     };
 
