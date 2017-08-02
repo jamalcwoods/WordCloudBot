@@ -3,7 +3,7 @@
 
 ![N|Solid](https://github.com/Darkspine77/WordCloudBot/blob/master/WordCloudBot_icon.png)
 
-Word Cloud Bot is a super simple discord bot that listens to channels, keeping note of words used by users and can then create word clouds using the command !wordcloud
+Word Cloud Bot is a super simple discord bot that listens to channels, keeping note of words used by users and can then create word clouds using the command cl!
 
 Commands include
   - cl!
