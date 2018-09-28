@@ -12,4 +12,4 @@ Commands include
   - cl! report
 
 
-To download this bot to your discord server, click [here!](https://discordapp.com/oauth2/authorize?client_id=263490610328109056&scope=bot&permissions=3072)
+To download this bot to your discord server, click [here!](https://discordapp.com/oauth2/authorize?client_id=495060057076269056&scope=bot&permissions=3072)
