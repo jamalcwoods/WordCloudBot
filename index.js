@@ -132,7 +132,7 @@ client.on('message', message => {
     }
 });
 
-client.login('MjYzNDkwNjEwMzI4MTA5MDU2.C0SyQw.691xyCxhZul1hmZXwUDwZwFT5rs');
+client.login('');
 
 function makeImage(words,ratings,channel){
     var numofWords = 0;
